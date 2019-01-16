@@ -4,6 +4,7 @@
 
 #include "mrrb.h"
 #include "base64.h"
+#include "wave.h"
 
 int main()
 {
@@ -26,6 +27,8 @@ int main()
     LOG_M("Size of uint16_t -> %" PRIu16 "\n", sizeof(uint16_t));
     LOG_M("Size of uint32_t -> %" PRIu32 "\n", sizeof(uint32_t));
     LOG_M("Size of uint64_t -> %" PRIu64 "\n", sizeof(uint64_t));
+
+    LOG_M("Size of wave_file_t -> %" PRIu64 "\n", sizeof(wave_file_t));
 
     return 0;
 }
