@@ -6,47 +6,50 @@ CLIBS  := -lm
 BUILD_DIR := ./build
 SRC_DIR   := ./src
 
-
-MAIN_SRC_OBJTS = main.o base64.o wave.o mrrb.o
 MAIN_OUT_NAME := sound2stroke.run
-
-D_TEST := 0
-TEST_SRC_OBJTS = test.o mrrb.o base64.o
 TEST_OUT_NAME := test.run
 
-###
-MAIN_SRC_OBJTS := $(addprefix $(SRC_DIR)/, $(MAIN_SRC_OBJTS))
-TEST_SRC_OBJTS := $(addprefix $(SRC_DIR)/, $(TEST_SRC_OBJTS))
-###
+SRC_NAMES     = base64 wave mrrb
+MAIN_SRC_NAME = main
+TEST_SRC_NAME = test
+
+D_TEST := 0
+
 
 ###
 ifeq ($(D_TEST), 0)
-	SRC_OBJTS := $(MAIN_SRC_OBJTS)
-	OUT_NAME  := $(MAIN_OUT_NAME)
+	OUT_NAME := $(MAIN_OUT_NAME)
+	SRC_MAIN := $(MAIN_SRC_NAME)
 else ifeq ($(D_TEST), 1)
-	SRC_OBJTS := $(TEST_SRC_OBJTS)
-	OUT_NAME  := $(TEST_OUT_NAME)
+	OUT_NAME := $(TEST_OUT_NAME)
+	SRC_MAIN := $(TEST_SRC_NAME)
 else
-	SRC_OBJTS := $(MAIN_SRC_OBJTS)
-	OUT_NAME  := $(MAIN_OUT_NAME)
+	OUT_NAME := $(MAIN_OUT_NAME)
+	SRC_MAIN := $(MAIN_SRC_NAME)
 endif
 ###
+
+###
+SRC_ROUTE := $(addprefix $(SRC_DIR)/, $(SRC_NAMES) $(SRC_MAIN))
+SRC_OBJTS := $(addsuffix .o, $(SRC_ROUTE))
+###
+
 
 all: build
 
 run: build
-	$(BUILD_DIR)/$(OUT_NAME)
+	@$(BUILD_DIR)/$(OUT_NAME)
 
 
 $(SRC_OBJTS): %.o: %.c
-	$(CC) -c $(CFLAGS) $^ -o $@
+	@echo Building $@
+	@$(CC) -c $(CFLAGS) $^ -o $@
 
 $(BUILD_DIR)/$(OUT_NAME): $(SRC_OBJTS)
-	mkdir -p $(BUILD_DIR)
-	$(CC) $(CFLAGS) $(CLIBS) $^ -o $@
+	@mkdir -p $(BUILD_DIR)
+	@$(CC) $(CFLAGS) $(CLIBS) $^ -o $@
 
 build: $(BUILD_DIR)/$(OUT_NAME)
-
 
 
 clean:
