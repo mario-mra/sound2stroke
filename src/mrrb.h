@@ -35,24 +35,23 @@
 
 
 // Application codes
-typedef const enum
+typedef enum
 {
-   IO_TRUE    = true,     /* 1 */
-   IO_FALSE   = false,    /* 0 */
-   FUNC_TRUE  = IO_TRUE,  /* 1 */
-   FUNC_FALSE = IO_FALSE, /* 0 */
-   FUNC_OK    = IO_TRUE,  /* 1 */
-   FUNC_ERR   = IO_FALSE, /* 0 */
+   FUNC_TRUE  = true,       /* 1 */
+   FUNC_FALSE = false,      /* 0 */
+   FUNC_OK    = FUNC_TRUE,  /* 1 */
+   FUNC_ERR   = FUNC_FALSE, /* 0 */
 
    FUNC_INPUT_ERR = 2,
 
    MAIN_OK     = 0,
    MAIN_NOT_OK = 1
 } AppCodes_t;
+typedef int func_err_t;
 
 
 // merge_array() -> Merge array (of real numbers 8bits to 64bits) into a unique variable
-typedef const enum
+typedef enum
 {
    LITTLE_ENDIAN = 0x00,
    BIG_ENDIAN    = 0x01
